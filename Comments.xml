@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Penguin.Cms.Email.Templating.Repositories.Local</name>
+        <name>Penguin.Cms.Email.Templating.Repositories</name>
     </assembly>
     <members>
         <member name="T:Penguin.Cms.Email.Templating.Repositories.EmailTemplateRepository">
