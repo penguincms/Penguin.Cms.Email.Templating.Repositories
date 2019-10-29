@@ -8,8 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="Penguin.Cms.Email.Templating" Version="1.0.0-T9LXGUJ" />
-    <PackageReference Include="Penguin.Cms.Repositories" Version="3.0.3-T9LXGUJ" />
-    <PackageReference Include="Penguin.Cms.Email" Version="1.0.0-T9LXGUJ" />
+    <PackageReference Include="Penguin.Cms.Email.Templating" Version="1.0.1-T9M1HHH" />
+    <PackageReference Include="Penguin.Cms.Repositories" Version="3.0.4-T9M1HHH" />
+    <PackageReference Include="Penguin.Cms.Email" Version="1.0.1-T9M1HHH" />
   </ItemGroup>
 </Project>
