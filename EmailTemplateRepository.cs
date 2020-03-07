@@ -41,8 +41,8 @@ namespace Penguin.Cms.Email.Templating.Repositories
         /// <param name="messageBus">An optional message bus for sending EmailTemplate messages</param>
         public EmailTemplateRepository(IPersistenceContext<EmailTemplate> dbContext, IQueueAndSendMail emailRepository, IEmailTemplateRenderer emailRenderer, MessageBus messageBus = null) : base(dbContext, messageBus)
         {
-            EmailRenderer = emailRenderer;
-            EmailRepository = emailRepository;
+            this.EmailRenderer = emailRenderer;
+            this.EmailRepository = emailRepository;
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
                 stackInformation.ValidateMethodParameters(templateParameters);
             }
 
-            GenerateEmailFromTemplate(templateParameters, SendDate, stackInformation.HandlerName, true, Overrides);
+            this.GenerateEmailFromTemplate(templateParameters, SendDate, stackInformation.HandlerName, true, Overrides);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
 
                 using (IWriteContext writeContext = this.WriteContext())
                 {
-                    EmailRepository.QueueOrSend(thisMessage);
+                    this.EmailRepository.QueueOrSend(thisMessage);
                 }
             }
         }
@@ -164,6 +164,9 @@ namespace Penguin.Cms.Email.Templating.Repositories
         /// </summary>
         /// <param name="handlerName">The handler to retrieve email templates for</param>
         /// <returns>a list of all enabled templates for a particular handler</returns>
-        public List<EmailTemplate> GetEnabledTemplates(string handlerName) => this.Where(e => e.HandlerName == handlerName && e.Enabled).ToList();
+        public List<EmailTemplate> GetEnabledTemplates(string handlerName)
+        {
+            return this.Where(e => e.HandlerName == handlerName && e.Enabled).ToList();
+        }
     }
 }
