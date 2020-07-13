@@ -103,7 +103,10 @@ namespace Penguin.Cms.Email.Templating.Repositories
         /// <param name="Overrides">An email message whos non-default values override the generated template values, useful for debugging by altering the output</param>
         public void GenerateEmailFromTemplate(List<TemplateParameter> parameters, DateTime? SendDate = null, string HandlerName = null, bool skipCallerValidation = false, IEmailMessage Overrides = null)
         {
-            Contract.Requires(parameters != null);
+            if (parameters is null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
 
             if (SendDate == null)
             {
