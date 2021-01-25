@@ -22,7 +22,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
             this.CallingMethod = callingStackTrace.GetFrame(1).GetMethod();
             this.Handler = this.CallingMethod.GetCustomAttribute<EmailHandlerAttribute>();
             this.HandlerName = handlerName ?? this.Handler?.HandlerName ?? $"{this.CallingMethod?.DeclaringType?.Name}.{this.CallingMethod?.Name}";
-            this.CallingMethod.GetParameters().ToDictionary(k => k.Name, p => p.ParameterType);
+            this.CallingMethodParameters = this.CallingMethod.GetParameters().ToDictionary(k => k.Name, p => p.ParameterType);
         }
 
         //By default we want to ensure no parameters are missing from the calling method.
