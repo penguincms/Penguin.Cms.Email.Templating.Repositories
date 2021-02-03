@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/penguincms/Penguin.Cms.Email.Templating.Repositories</PackageProjectUrl>
-    <Version>5.0.0</Version>
+    <Version>5.0.1</Version>
     <Description>Not Available</Description>
     <AssemblyName>Penguin.Cms.Email.Templating.Repositories</AssemblyName>
     <RootNamespace>Penguin.Cms.Email.Templating.Repositories</RootNamespace>
@@ -11,8 +11,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Penguin.Cms.Email.Templating" Version="5.0.1-TA99DVY" />
-    <PackageReference Include="Penguin.Cms.Email" Version="5.0.1-TA99DVY" />
-    <PackageReference Include="Penguin.Cms.Repositories" Version="5.0.1-TA99DVY" />
+    <PackageReference Include="Penguin.Cms.Email.Templating" Version="5.0.2-TA9KKLU" />
+    <PackageReference Include="Penguin.Cms.Email" Version="5.0.2-TA9KKLU" />
+    <PackageReference Include="Penguin.Cms.Repositories" Version="5.0.2-TA9KKLU" />
   </ItemGroup>
 </Project>
