@@ -13,6 +13,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Penguin.Cms.Email.Templating" Version="5.0.6-TAHULSY" />
     <PackageReference Include="Penguin.Cms.Email" Version="5.0.6-TAHULSY" />
-    <PackageReference Include="Penguin.Cms.Repositories" Version="5.0.6-TAJHTXV" />
+    <PackageReference Include="Penguin.Cms.Repositories" Version="5.0.6-TAKDH3F" />
   </ItemGroup>
 </Project>
