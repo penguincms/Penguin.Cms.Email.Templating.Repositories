@@ -166,9 +166,6 @@ namespace Penguin.Cms.Email.Templating.Repositories
         /// </summary>
         /// <param name="handlerName">The handler to retrieve email templates for</param>
         /// <returns>a list of all enabled templates for a particular handler</returns>
-        public List<EmailTemplate> GetEnabledTemplates(string handlerName)
-        {
-            return this.Where(e => e.HandlerName == handlerName && e.Enabled).ToList();
-        }
+        public List<EmailTemplate> GetEnabledTemplates(string handlerName) => this.Where(e => e.HandlerName == handlerName && e.Enabled).ToList();
     }
 }
