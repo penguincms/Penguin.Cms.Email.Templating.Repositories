@@ -19,12 +19,13 @@ namespace Penguin.Cms.Email.Templating.Repositories
 
         public StackInformation(StackTrace callingStackTrace, string handlerName = null)
         {
-			int f = 0;
-			do {
-				this.CallingMethod = callingStackTrace.GetFrame(f++).GetMethod();
-				this.Handler = this.CallingMethod.GetCustomAttribute<EmailHandlerAttribute>();
-            } while(this.Handler is null);
-			
+            int f = 0;
+            do
+            {
+                this.CallingMethod = callingStackTrace.GetFrame(f++).GetMethod();
+                this.Handler = this.CallingMethod.GetCustomAttribute<EmailHandlerAttribute>();
+            } while (this.Handler is null);
+
             this.HandlerName = handlerName ?? this.Handler?.HandlerName ?? $"{this.CallingMethod?.DeclaringType?.Name}.{this.CallingMethod?.Name}";
             this.CallingMethodParameters = this.CallingMethod.GetParameters().ToDictionary(k => k.Name, p => p.ParameterType);
         }
