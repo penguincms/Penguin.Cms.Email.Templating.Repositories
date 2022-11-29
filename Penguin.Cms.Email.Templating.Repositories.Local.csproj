@@ -10,7 +10,7 @@
     <DocumentationFile>Penguin.Cms.Email.Templating.Repositories.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <ProjectReference Include="..\Penguin.Cms.Abstractions\Penguin.Cms.Abstractions.Local.csproj" />
     <ProjectReference Include="..\Penguin.Cms.Email\Penguin.Cms.Email.Local.csproj" />
     <ProjectReference Include="..\Penguin.Cms.Email.Abstractions\Penguin.Cms.Email.Abstractions.Local.csproj" />
