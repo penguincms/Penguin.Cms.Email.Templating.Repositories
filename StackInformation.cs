@@ -12,9 +12,13 @@ namespace Penguin.Cms.Email.Templating.Repositories
     internal class StackInformation
     {
         private const string MESSAGE_HANDLER_NOT_IMPLEMENTED_MESSAGE = "Calling method requires MessageHandlerAttribute to use this function";
+
         public MethodBase CallingMethod { get; set; }
+
         public Dictionary<string, Type> CallingMethodParameters { get; set; }
+
         public EmailHandlerAttribute Handler { get; set; }
+
         public string HandlerName { get; set; }
 
         public StackInformation(StackTrace callingStackTrace, string handlerName = null)
