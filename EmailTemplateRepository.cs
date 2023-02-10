@@ -40,29 +40,29 @@ namespace Penguin.Cms.Email.Templating.Repositories
         /// <param name="messageBus">An optional message bus for sending EmailTemplate messages</param>
         public EmailTemplateRepository(IPersistenceContext<EmailTemplate> dbContext, IQueueAndSendMail emailRepository, IEmailTemplateRenderer emailRenderer, MessageBus messageBus = null) : base(dbContext, messageBus)
         {
-            this.EmailRenderer = emailRenderer;
-            this.EmailRepository = emailRepository;
+            EmailRenderer = emailRenderer;
+            EmailRepository = emailRepository;
         }
 
         /// <summary>
         /// Generates an email using the template(s) assigned to the given handler name
         /// </summary>
-        /// <param name="parameters">Binding Parameters. First is property name, second is value. Value can be string.</param>
+        /// <param name="Model">Binding Parameters. First is property name, second is value. Value can be string.</param>
         /// <param name="SendDate">The date the email should be queued to send on</param>
         /// <param name="HandlerName">The name of the handler generating this email. If null, an attempt is made to retrieve this value using the stack</param>
         /// <param name="skipCallerValidation">For when anything other than an action is calling the method</param>
         /// <param name="Overrides">An email message whos non-default values override the generated template values, useful for debugging by altering the output</param>
-        public void GenerateEmailFromTemplate(Dictionary<string, object> parameters, DateTime? SendDate = null, string HandlerName = null, bool skipCallerValidation = false, IEmailMessage Overrides = null)
+        public void GenerateEmailFromTemplate(Dictionary<string, object> Model, DateTime? SendDate = null, string HandlerName = null, bool skipCallerValidation = false, IEmailMessage Overrides = null)
         {
-            if (parameters is null)
+            if (Model is null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException(nameof(Model));
             }
 
-            List<TemplateParameter> templateParameters = new List<TemplateParameter>(parameters.Count);
-            StackInformation stackInformation = new StackInformation(new StackTrace(), HandlerName);
+            List<TemplateParameter> templateParameters = new(Model.Count);
+            StackInformation stackInformation = new(new StackTrace(), HandlerName);
 
-            foreach (KeyValuePair<string, object> kvp in parameters)
+            foreach (KeyValuePair<string, object> kvp in Model)
             {
                 string name = kvp.Key;
                 object value = kvp.Value;
@@ -89,7 +89,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
                 stackInformation.ValidateMethodParameters(templateParameters);
             }
 
-            this.GenerateEmailFromTemplate(templateParameters, SendDate, stackInformation.HandlerName, true, Overrides);
+            GenerateEmailFromTemplate(templateParameters, SendDate, stackInformation.HandlerName, true, Overrides);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
 
             if (HandlerName is null || !skipCallerValidation)
             {
-                StackInformation stackInformation = new StackInformation(new StackTrace(), HandlerName);
+                StackInformation stackInformation = new(new StackTrace(), HandlerName);
                 HandlerName = stackInformation.HandlerName;
 
                 if (!skipCallerValidation)
@@ -123,15 +123,15 @@ namespace Penguin.Cms.Email.Templating.Repositories
                 }
             }
 
-            List<EmailTemplate> templates = this.GetEnabledTemplates(HandlerName);
+            List<EmailTemplate> templates = GetEnabledTemplates(HandlerName);
 
             foreach (EmailTemplate thisTemplate in templates.Select(t => JsonConvert.DeserializeObject<EmailTemplate>(JsonConvert.SerializeObject(t)))) //Detatch the templates (Without losing child properties) so we can overwrite with post-transform values
             {
-                EmailMessage thisMessage = new EmailMessage();
+                EmailMessage thisMessage = new();
 
                 foreach (PropertyInfo templateProperty in thisTemplate.GetType().GetProperties().Where(p => p.PropertyType == typeof(string)))
                 {
-                    string value = this.EmailRenderer.RenderEmail(parameters, thisTemplate, templateProperty);
+                    string value = EmailRenderer.RenderEmail(parameters, thisTemplate, templateProperty);
 
                     templateProperty.SetValue(thisTemplate, value);
                 }
@@ -154,10 +154,8 @@ namespace Penguin.Cms.Email.Templating.Repositories
                 thisMessage.ExternalId = thisMessage.Guid.ToString();
                 thisMessage.Label = HandlerName;
 
-                using (IWriteContext writeContext = this.WriteContext())
-                {
-                    this.EmailRepository.QueueOrSend(thisMessage);
-                }
+                using IWriteContext writeContext = WriteContext();
+                EmailRepository.QueueOrSend(thisMessage);
             }
         }
 

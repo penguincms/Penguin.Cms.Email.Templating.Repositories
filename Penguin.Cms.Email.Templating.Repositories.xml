@@ -32,7 +32,7 @@
             <summary>
             Generates an email using the template(s) assigned to the given handler name
             </summary>
-            <param name="parameters">Binding Parameters. First is property name, second is value. Value can be string.</param>
+            <param name="Model">Binding Parameters. First is property name, second is value. Value can be string.</param>
             <param name="SendDate">The date the email should be queued to send on</param>
             <param name="HandlerName">The name of the handler generating this email. If null, an attempt is made to retrieve this value using the stack</param>
             <param name="skipCallerValidation">For when anything other than an action is calling the method</param>

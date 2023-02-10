@@ -22,12 +22,12 @@ namespace Penguin.Cms.Email.Templating.Repositories
             int f = 0;
             do
             {
-                this.CallingMethod = callingStackTrace.GetFrame(f++).GetMethod();
-                this.Handler = this.CallingMethod.GetCustomAttribute<EmailHandlerAttribute>();
-            } while (this.Handler is null);
+                CallingMethod = callingStackTrace.GetFrame(f++).GetMethod();
+                Handler = CallingMethod.GetCustomAttribute<EmailHandlerAttribute>();
+            } while (Handler is null);
 
-            this.HandlerName = handlerName ?? this.Handler?.HandlerName ?? $"{this.CallingMethod?.DeclaringType?.Name}.{this.CallingMethod?.Name}";
-            this.CallingMethodParameters = this.CallingMethod.GetParameters().ToDictionary(k => k.Name, p => p.ParameterType);
+            HandlerName = handlerName ?? Handler?.HandlerName ?? $"{CallingMethod?.DeclaringType?.Name}.{CallingMethod?.Name}";
+            CallingMethodParameters = CallingMethod.GetParameters().ToDictionary(k => k.Name, p => p.ParameterType);
         }
 
         //By default we want to ensure no parameters are missing from the calling method.
@@ -35,19 +35,19 @@ namespace Penguin.Cms.Email.Templating.Repositories
         //Its used to enforce standards on the calling method to reduce errors
         public void ValidateMethodParameters(List<TemplateParameter> Parameters)
         {
-            if (this.Handler == null)
+            if (Handler == null)
             {
                 throw new ArgumentNullException(nameof(Parameters), MESSAGE_HANDLER_NOT_IMPLEMENTED_MESSAGE);
             }
 
-            Type DeclaringType = this.CallingMethod.DeclaringType;
+            Type DeclaringType = CallingMethod.DeclaringType;
 
             if (!DeclaringType.GetInterfaces().Contains(typeof(IEmailHandler)))
             {
                 throw new Exception($"{DeclaringType.Name} must implement {nameof(IEmailHandler)} to use this function");
             }
 
-            foreach (ParameterInfo thisParameter in this.CallingMethod.GetParameters())
+            foreach (ParameterInfo thisParameter in CallingMethod.GetParameters())
             {
                 if (!Parameters.Any(p => p.Name == thisParameter.Name))
                 {
@@ -57,7 +57,7 @@ namespace Penguin.Cms.Email.Templating.Repositories
 
             foreach (TemplateParameter param in Parameters)
             {
-                if (!this.CallingMethod.GetParameters().Any(p => p.Name == param.Name))
+                if (!CallingMethod.GetParameters().Any(p => p.Name == param.Name))
                 {
                     throw new ArgumentNullException($"{param.Name} passed into email generation, but does not appear in parameters list");
                 }
