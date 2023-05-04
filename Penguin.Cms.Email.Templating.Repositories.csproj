@@ -12,8 +12,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Penguin.Cms.Email.Templating" Version="5.7.0" />
-    <PackageReference Include="Penguin.Cms.Email" Version="5.7.0" />
-    <PackageReference Include="Penguin.Cms.Repositories" Version="5.7.0" />
+    <PackageReference Include="Penguin.Cms.Email.Templating" Version="5.15.0" />
+    <PackageReference Include="Penguin.Cms.Email" Version="5.15.0" />
+    <PackageReference Include="Penguin.Cms.Repositories" Version="5.15.0" />
   </ItemGroup>
 </Project>
